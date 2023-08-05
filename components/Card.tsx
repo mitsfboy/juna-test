@@ -39,7 +39,6 @@ const Card = ({ store }: { store: Store }) => {
             alt={`Imagen default para la tienda ${store.nombre}`}
             width={400}
             height={200}
-            objectFit="cover"
             priority
           />
           <div className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md mr-4 -mb-4 cursor-pointer hover:scale-110 hover:contrast-125 transform transition duration-300 ease-in-out">
