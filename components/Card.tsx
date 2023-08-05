@@ -1,8 +1,8 @@
+import { FaInstagram } from 'react-icons/fa'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Location, MapIcon } from '@/components/Icons'
 import { Store } from '@/types/Store'
-import { FaInstagram } from 'react-icons/fa'
 
 const Card = ({ store }: { store: Store }) => {
   const sliceDescription = (description: string) => {
@@ -41,7 +41,7 @@ const Card = ({ store }: { store: Store }) => {
             height={200}
             priority
           />
-          <div className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md mr-4 -mb-4 cursor-pointer hover:scale-110 hover:contrast-125 transform transition duration-300 ease-in-out">
+          <div className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md mr-4 -mb-4 cursor-pointer hover:scale-110 hover:contrast-110 transform transition duration-300 ease-in-out">
             <Image
               className="h-14 w-14 object-cover rounded-full overflow-hidden"
               src={store.logo}
