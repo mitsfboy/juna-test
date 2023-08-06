@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 import Header from '@/components/Header'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 interface LayoutProps {
   title: string
@@ -12,7 +14,13 @@ const Layout = ({ title, description, children }: LayoutProps) => {
     <>
       <Header title={title} description={description} />
 
+      <header>
+        <Navbar />
+      </header>
+
       <main>{children}</main>
+
+      <Footer />
     </>
   )
 }
