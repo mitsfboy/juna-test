@@ -1,19 +1,12 @@
 import { useState, useEffect, createContext, ReactNode } from 'react'
-import { Store } from '@/types/Store'
 import axios from 'axios'
-
-type StoreContext = {
-  stores: Store[]
-  filteredStores: Store[]
-  especialidadActive: string
-  handleFilterChange: (especialidad: string) => void
-}
+import { Store } from '@/types/Store'
+import { StoreContext } from '@/types/StoreContext'
 
 export const StoresContext = createContext<StoreContext>({
   stores: [],
-  filteredStores: [],
-  especialidadActive: 'todos',
-  handleFilterChange: () => {},
+  storesBySpecialty: [],
+  obtenerEspecialidad: () => [],
 })
 
 type StoresProviderProps = {
@@ -22,12 +15,14 @@ type StoresProviderProps = {
 
 export function StoresProvider({ children }: StoresProviderProps) {
   const [stores, setStores] = useState<Store[]>([])
-  const [especialidadActive, setEspecialidadActive] = useState<string>('todos')
+  const [storesBySpecialty, setStoresBySpecialty] = useState<Store[]>([])
 
   const fetchStores = async () => {
     try {
       const { data } = await axios('/api/stores')
+      
       setStores(data)
+      setStoresBySpecialty(data)
     } catch (error) {
       console.log('Error fetching stores: ', error)
     }
@@ -37,22 +32,23 @@ export function StoresProvider({ children }: StoresProviderProps) {
     fetchStores()
   }, [])
 
-  const handleFilterChange = (especialidad: string) => {
-    setEspecialidadActive(especialidad)
+  const obtenerEspecialidad = (especialidad: string) => {
+    if (especialidad === 'todos') {
+      setStoresBySpecialty(stores) 
+    } else {
+      const especialidadEncontrada = stores.filter(
+        store => store.especialidad.toLowerCase() === especialidad
+      )
+      setStoresBySpecialty(especialidadEncontrada)
+    }
   }
-
-  const filteredStores = stores.filter(store => {
-    if (especialidadActive === 'todos') return true
-    return store.especialidad === especialidadActive
-  })
-
+  
   return (
     <StoresContext.Provider
       value={{
         stores,
-        filteredStores,
-        especialidadActive,
-        handleFilterChange,
+        storesBySpecialty,
+        obtenerEspecialidad,
       }}
     >
       {children}
